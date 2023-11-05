@@ -1,3 +1,3 @@
 # AML Final Project
 
-Team members: Margaret Reed (mr4251)
+Team members: Margaret Reed (mr4251), 
