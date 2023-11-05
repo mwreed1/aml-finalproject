@@ -1,0 +1,75 @@
+---
+title: "AML Final Project"
+author: "Margaret Reed"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load-pkgs}
+library(tidyverse)
+library(janitor)
+```
+
+```{r load-data}
+data <- read_csv("data/datos_merged_1986_2023.csv")
+```
+
+```{r clean-data}
+data <- data %>%
+  clean_names() %>%
+  select(-x1, -unnamed_0) %>%
+  mutate(
+    album_release_date = as.Date(album_release_date)
+  )
+```
+
+
+```{r explore-data}
+artists <- data %>%
+  group_by(principal_artist_name) %>%
+  summarize(
+    mean_followers = mean(principal_artist_followers),
+    mean_popularity = mean(popularity),
+    n_songs = n(),
+    most_recent_song_year = max(year)
+  ) %>%
+  arrange(desc(n_songs))
+```
+
+
+```{r}
+artists %>%
+  ggplot(
+    aes(x = mean_followers)
+  ) +
+  geom_histogram()
+
+summary(artists$mean_followers)
+```
+
+
+
+```{r}
+artists %>%
+  filter(mean_followers > 10000) %>%
+  ggplot(
+    aes(x = log(mean_followers), y = mean_popularity)
+  ) +
+  geom_point() +
+  geom_smooth(se=F) +
+  theme_minimal()
+```
+
+```{r}
+data %>%
+  ggplot(
+    aes(x = tempo, y = popularity)
+  ) +
+  geom_point() +
+  geom_smooth(se=F) +
+  theme_minimal()
+```
