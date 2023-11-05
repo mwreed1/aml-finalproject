@@ -73,3 +73,29 @@ data %>%
   geom_smooth(se=F) +
   theme_minimal()
 ```
+
+
+```{r}
+data %>%
+  ggplot(
+    aes(x = album_release_date, y = popularity)
+  ) +
+  geom_point() +
+  geom_smooth(se=F) +
+  theme_minimal()
+```
+
+
+```{r}
+data %>%
+  group_by(year) %>%
+  summarize(
+    mean_popularity = mean(popularity)
+  ) %>%
+  ggplot(
+    aes(x = year, y = mean_popularity)
+  ) +
+  geom_line() +
+  theme_minimal()
+```
+
