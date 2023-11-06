@@ -86,7 +86,7 @@ data %>%
 ```
 
 
-```{r}
+```{r pop-by-year}
 data %>%
   group_by(year) %>%
   summarize(
@@ -96,6 +96,36 @@ data %>%
     aes(x = year, y = mean_popularity)
   ) +
   geom_line() +
+  labs(
+    x = "Release year",
+    y = "Average popularity",
+    title = "Average song popularity by year"
+  ) +
+  theme_minimal()
+```
+
+
+```{r}
+data %>%
+  ggplot(
+    aes(x = popularity)
+  ) +
+  geom_boxplot() +
+  labs(
+    x = "Song popularity",
+    title = "Distribution of popularity ratings"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+data %>%
+  # filter(accou < 1000000) %>%
+  ggplot(
+    aes(x = energy, y = popularity)
+  ) +
+  geom_point() +
+  geom_smooth(se = F) +
   theme_minimal()
 ```
 
